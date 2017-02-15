@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epamrd.org/Presents"
+        xmlns:tns="http://www.epamrd.org/Presents"
+        xmlns:s="http://www.epamrd.org/sock"
+        xmlns:c="http://www.epamrd.org/card"
+        elementFormDefault="qualified"
+        attributeFormDefault="qualified">
+    <import schemaLocation="Sock.xsd" namespace="http://www.epamrd.org/sock" />
+    <import schemaLocation="Card.xsd" namespace="http://www.epamrd.org/card" />
+
+    <element name="presents" type="tns:PresentsType" />
+
+    <complexType name="PresentsType">
+        <sequence>
+            <element name="present">
+                <complexType>
+                    <sequence>
+                        <element name="sock" type="s:SockType" />
+                        <element name="card" type="c:CardType" />
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+
+</schema>

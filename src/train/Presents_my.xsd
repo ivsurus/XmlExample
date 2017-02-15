@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.epamrd.org/MYNAMESPACE"
+    xmlns:tns="http://www.epamrd.org/MYNAMESPACE"
+    elementFormDefault="qualified">
+
+    <xs:element  name="presents" type="tns:PresentsType"/>
+
+    <xs:complexType name ="PresentsType">
+        <xs:sequence>
+            <xs:element name="present" type="tns:PresentType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PresentType">
+        <xs:sequence>
+            <xs:element name="sock" type="tns:SockType" minOccurs="1"/>
+            <xs:element name="card" type="tns:CardType" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SockType">
+        <xs:sequence>
+            <xs:element name="color" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="size" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="CardType">
+        <xs:sequence>
+            <xs:element name="message" type="xs:string" minOccurs="1"/>
+            <xs:element name="color" type="xs:string" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

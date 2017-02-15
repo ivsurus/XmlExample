@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<presents xmlns ="http://www.epamrd.org/MYNAMESPACE" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.epamrd.org/MYNAMESPACE Presents_my.xsd">
+    <present>
+        <sock size="4">
+            <color>red</color>
+        </sock>
+        <card>
+            <message>Happy New Year!</message>
+            <color>gold</color>
+        </card>
+    </present>
+</presents>

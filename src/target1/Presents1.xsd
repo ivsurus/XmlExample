@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epamrd.org/Presents"
+        xmlns:tns="http://www.epamrd.org/Presents"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+
+    <element name="presents" type="tns:PresentsType" />
+
+    <complexType name="PresentsType">
+        <sequence>
+            <element name="present">
+                <complexType>
+                    <sequence>
+                        <element name="sock" type="tns:SockType" />
+                        <element name="card" type="tns:CardType" />
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+
+    <complexType name="SockType">
+        <sequence>
+            <element name="color" type="string"/>
+        </sequence>
+        <attribute name="size" type="integer" use="required"/>
+    </complexType>
+
+    <complexType name="CardType">
+        <sequence>
+            <element name="message" type="string" />
+            <element name="color" type="string" />
+        </sequence>
+    </complexType>
+
+</schema>

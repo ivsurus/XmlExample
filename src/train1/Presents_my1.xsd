@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.epamrd.org/MYNAMESPACE"
+    xmlns:tns="http://www.epamrd.org/MYNAMESPACE"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    <!--для того чтобы все локально объявленные элементы были квалифицированы-->
+    <!--если attributeFromDefault="qualified" то атрибут в документе с префиксом-->
+
+    <element  name="presents" type="tns:PresentsType"/>
+
+    <complexType name ="PresentsType">
+        <sequence>
+            <element name="present" type="tns:PresentType" minOccurs="1" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="PresentType">
+        <sequence>
+            <element name="sock" type="tns:SockType" minOccurs="1"/>
+            <element name="card" type="tns:CardType" minOccurs="1"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="SockType">
+        <sequence>
+            <element name="color" type="string"/>
+        </sequence>
+        <attribute name="size" type="int" use="required"/>
+    </complexType>
+
+    <complexType name="CardType">
+        <sequence>
+            <element name="message" type="string" minOccurs="1"/>
+            <element name="color" type="string" minOccurs="1"/>
+        </sequence>
+    </complexType>
+
+</schema>
