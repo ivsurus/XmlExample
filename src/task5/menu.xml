@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appetizers xmlns ="http://www.epam.com/appetizers"
+            xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.epam.com/appetizers menu.xsd">
+
+    <hot_appetizers>Ассорти рыбное</hot_appetizers>
+
+    <cold_appetizers>dsf</cold_appetizers>
+
+    <breakfasts>sdf</breakfasts>
+
+</appetizers>

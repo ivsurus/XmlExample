@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epam.com/appetizers"
+        xmlns:tns="http://www.epam.com/appetizers"
+        xmlns:h="http://www.epam.com/hot_appetizers"
+        elementFormDefault="qualified">
+        <element name="appetizers" type="tns:AppetizersType"/>
+
+        <import schemaLocation="hot.xsd" namespace="http://www.epam.com/hot_appetizers"/>
+
+        <complexType name="AppetizersType">
+            <sequence>
+                <element name="hot_appetizers" type="h:HotAppetizersType"/>
+                <element name="cold_appetizers" type="tns:ColdAppetizersType"/>
+                <element name="breakfasts" type="tns:BreakfastsType"/>
+            </sequence>
+        </complexType>
+
+
+</schema>

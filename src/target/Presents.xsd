@@ -6,7 +6,7 @@
         xmlns:c="http://www.epamrd.org/card"
         elementFormDefault="qualified"
         attributeFormDefault="qualified">
-    <import schemaLocation="Sock.xsd" namespace="http://www.epamrd.org/sock" />
+    <import schemaLocation="Sock.xsd" namespace="http://www.epamrd.org/sock"/>
     <import schemaLocation="Card.xsd" namespace="http://www.epamrd.org/card" />
 
     <element name="presents" type="tns:PresentsType" />
