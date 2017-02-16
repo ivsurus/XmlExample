@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epam.com/breakfast"
+        xmlns:tns="http://www.epam.com/breakfast"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <element name="breakfast-menu" type="tns:BreakfastType"/>
+
+    <complexType name="BreakfastType">
+        <sequence>
+            <element name="food" type="tns:FoodType" minOccurs="1" maxOccurs="unbounded"/>
+        </sequence>
+
+    </complexType>
+
+    <complexType name="FoodType">
+        <sequence>
+            <element name="name" type="string" />
+            <element name="price" type="string" />
+            <element name="description" type="string" />
+            <element name="calories" type="string" />
+        </sequence>
+        <attribute name="id" type="int" use="required"/>
+    </complexType>
+
+</schema>
