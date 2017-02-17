@@ -1,4 +1,4 @@
-package task5.staxParser.example;
+package examples.saxParser.example;
 
 
 public class Food {

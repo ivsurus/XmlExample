@@ -1,4 +1,4 @@
-package task5.staxParser.example;
+package examples.staxParser.example;
 
 
         import java.io.FileWriter;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appetizers xmlns ="http://www.epam.com/appetizers2"
+            xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.epam.com/appetizers2 menu2.xsd">
+
+    <appetizer name="ХОЛОДНЫЕ ЗАКУСКИ">
+        <food id="c1">
+            <picture>https://pearl.com/blah_blah.jpg</picture>
+            <name>Ассорти рыбное</name>
+            <description>Слабосоленая форель, семга</description>
+            <portion>100/20/15 гр.</portion>
+            <price></price>
+        </food>
+        <food id="c2">
+            <picture>http://pearl.com/</picture>
+            <name>Тарталетки с красной икрой</name>
+            <description>Тарталетки с икрой (красной)</description>
+            <portion>60/50 гр.</portion>
+            <price></price>
+        </food>
+    </appetizer>
+
+    <appetizer name="ГОРЯЧИЕ ЗАКУСКИ">
+
+    </appetizer>
+
+    <appetizer name="ЗАВТРАКИ">
+
+    </appetizer>
+
+
+
+</appetizers>

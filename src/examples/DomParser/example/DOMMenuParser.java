@@ -1,4 +1,4 @@
-package task5.DomParser.example;
+package examples.DomParser.example;
 
 
         import java.io.IOException;

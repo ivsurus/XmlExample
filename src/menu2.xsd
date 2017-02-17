@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epam.com/appetizers2"
+        xmlns:tns="http://www.epam.com/appetizers2"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <element name="appetizers">
+    <complexType>
+        <sequence>
+            <element name="appetizer" type="tns:AppetizerType" minOccurs="1" maxOccurs="3"/>
+        </sequence>
+    </complexType>
+    </element>
+
+    <complexType name="AppetizerType">
+        <sequence>
+            <element name="food" type="tns:FoodType" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="name" type="tns:AppetizerAttributeType" use="required"/>
+    </complexType>
+
+    <complexType name="FoodType">
+        <sequence>
+            <element name="picture" type="tns:PictureType"/>
+            <element name="name" type="tns:NameType"/>
+            <element name="description" type="string" />
+            <element name="portion" type="tns:PortionType"/>
+            <element name="price" type="double" default="0"/>
+        </sequence>
+        <attribute name="id" type="ID" use="required"/>
+    </complexType>
+
+
+    <simpleType name="AppetizerAttributeType">
+        <restriction base="string">
+            <enumeration value="ХОЛОДНЫЕ ЗАКУСКИ"/>
+            <enumeration value="ГОРЯЧИЕ ЗАКУСКИ"/>
+            <enumeration value="ЗАВТРАКИ"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="PictureType">
+        <restriction base="string">
+            <pattern value="(https?|ftp|file)://[-a-zA-Z0-9+@#/%?=~_|!:,.;]*[-a-zA-Z0-9+@#/%=~_|]"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="NameType">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <simpleType name="PortionType">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+</schema>

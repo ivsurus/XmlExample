@@ -1,4 +1,4 @@
-package task5.saxParser.example;
+package examples.saxParser.example;
 
 
         import java.io.IOException;
