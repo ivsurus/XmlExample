@@ -5,20 +5,28 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MenuSaxHandler extends DefaultHandler {
 
-    private List<Food> foodList = new ArrayList<>();
+    private List<Food> foodList;
 
+    private Map<Appetizer, List<Food>> appetizersMap = new HashMap<>();
+
+    private Appetizer appetizer;
     private Food food;
 
     private StringBuilder text;
 
     public List<Food> getFoodList() {
         return foodList;
+    }
+
+    public Map getAppetizersMap() {
+        return appetizersMap;
     }
 
     public void startDocument() throws SAXException {
@@ -34,19 +42,31 @@ public class MenuSaxHandler extends DefaultHandler {
         System.out.println("startElement -> " + "uri: " + uri + ", localName: " + localName
                         + ", qName: " + qName);
         text = new StringBuilder();
+
         if (qName.equals("food")){
             food = new Food();
-            food.setId((Integer.parseInt(attributes.getValue("id"))));
+            food.setId(attributes.getValue("id"));
+        }
+        if (qName.equals("appetizer")){
+            appetizer = new Appetizer();
+            appetizer.setName(attributes.getValue("name"));
+            foodList = new ArrayList<>();
         }
     }
     public void characters(char[] buffer, int start, int length) {
         text.append(buffer, start, length);
     }
+
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
-        MenuTagName tagName =
-                MenuTagName.valueOf(qName.toUpperCase().replace("-", "_"));
+
+        MenuTagName tagName = MenuTagName.valueOf(qName.toUpperCase().replace("-", "_"));
+
         switch(tagName){
+            case APPETIZER:
+                appetizersMap.put(appetizer, foodList);
+                appetizer = null;
+                break;
             case NAME:
                 food.setName(text.toString());
                 break;
@@ -56,8 +76,11 @@ public class MenuSaxHandler extends DefaultHandler {
             case DESCRIPTION:
                 food.setDescription(text.toString());
                 break;
-            case CALORIES:
-                food.setCalories(Integer.parseInt(text.toString()));
+            case PORTION:
+                food.setPortion(text.toString());
+                break;
+            case PICTURE:
+                food.setPicture(text.toString());
                 break;
             case FOOD:
                 foodList.add(food);

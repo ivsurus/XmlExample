@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appetizers xmlns ="http://www.epam.com/appetizers2"
+            xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.epam.com/appetizers2 menu2.xsd">
+
+    <appetizer name="ХОЛОДНЫЕ ЗАКУСКИ">
+        <food id="c1">
+            <picture>https://pearl.com/cold/assorti.jpg</picture>
+            <name>Ассорти рыбное</name>
+            <description>Слабосоленая форель, семга</description>
+            <portion>100/20/15 гр.</portion>
+            <price>10</price>
+        </food>
+        <food id="c2">
+            <picture>https://pearl.com/cold/tartaletki</picture>
+            <name>Тарталетки с красной икрой</name>
+            <description>Тарталетки с икрой (красной)</description>
+            <portion>60/50 гр.</portion>
+            <price>20</price>
+        </food>
+    </appetizer>
+
+    <appetizer name="ГОРЯЧИЕ ЗАКУСКИ">
+        <food id="h1">
+            <picture>https://pearl.com/hot/lobio</picture>
+            <name>Лобио с шампиньонами</name>
+            <description>Фасоль с шампиньонами и грецким орехом</description>
+            <portion>150/5 гр.</portion>
+            <price>105</price>
+        </food>
+        <food id="h2">
+            <picture>https://pearl.com/hot/ahmatar</picture>
+            <name>Ахматар мясной</name>
+            <description>Колбаса, ветчина, буженина, сыр, запеченые на мангале в лаваше</description>
+            <portion>1 шт.</portion>
+            <price>150</price>
+        </food>
+    </appetizer>
+
+    <appetizer name="ЗАВТРАКИ">
+        <food id="b1">
+            <picture>https://pearl.com/breakafasts/glazuniya</picture>
+            <name>Глазунья</name>
+            <description>2 яйца (на выбор: ветчина, сыр, помидоры</description>
+            <portion>150</portion>
+            <price>30</price>
+        </food>
+        <food id="b2">
+            <picture>https://pearl.com/breakafasts/blinchiki</picture>
+            <name>Блинчики с мясом</name>
+            <description>Жареные блинчики с мясом</description>
+            <portion>150 гр.</portion>
+            <price>40</price>
+        </food>
+    </appetizer>
+
+
+
+</appetizers>
