@@ -1,14 +1,13 @@
 package task5.sax.sax;
 
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 import task5.sax.bean.Appetizer;
 import task5.sax.bean.Food;
-import task5.sax.bean.tag.MenuTagName;
-
+import task5.sax.bean.menuName.MenuAttributeName;
+import task5.sax.bean.menuName.MenuTagName;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,12 +19,9 @@ public class MenuSaxHandler extends DefaultHandler {
     private List<Food> foodList;
     private Appetizer appetizer;
     private Food food;
-
+    private List <String> type;
     private StringBuilder text;
 
- /*   public List<Food> getFoodList() {
-        return foodList;
-    }*/
 
     public Map getAppetizersMap() {
         return appetizersMap;
@@ -44,47 +40,62 @@ public class MenuSaxHandler extends DefaultHandler {
         System.out.println("startElement -> " + "uri: " + uri + ", localName: " + localName + ", qName: " + qName);
         text = new StringBuilder();
 
-        if (qName.equals("food")){
+        if (qName.equals(MenuTagName.FOOD.toString().toLowerCase())){
             food = new Food();
-            food.setId(attributes.getValue("id"));
+            food.setId(attributes.getValue(MenuAttributeName.ID.toString().toLowerCase()));
         }
-        if (qName.equals("appetizer")){
+
+        if (qName.equals(MenuTagName.TYPE.toString().toLowerCase())){
+            type = new ArrayList<>();
+            type.add(attributes.getValue(MenuAttributeName.ID.toString().toLowerCase()));
+        }
+
+        if (qName.equals(MenuTagName.APPETIZER.toString().toLowerCase())){
             appetizer = new Appetizer();
-            appetizer.setName(attributes.getValue("name"));
+            appetizer.setName(attributes.getValue(MenuAttributeName.NAME.toString().toLowerCase()));
             foodList = new ArrayList<>();
         }
     }
+
     public void characters(char[] buffer, int start, int length) {
         text.append(buffer, start, length);
     }
 
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        MenuTagName tagName = MenuTagName.valueOf(qName.toUpperCase().replace("-", "_"));
+        MenuTagName tagName = MenuTagName.valueOf(qName.toUpperCase());
 
         switch(tagName){
+
             case APPETIZER:
                 appetizersMap.put(appetizer, foodList);
-                appetizer = null;
+                break;
+
+            case TYPE:
+                food.setTypes(type.get(0), type.get(1), type.get(2));
                 break;
             case NAME:
                 food.setName(text.toString());
                 break;
+
             case PRICE:
-                food.setPrice(text.toString());
+                type.add((text.toString()));
                 break;
+
             case DESCRIPTION:
-                food.setDescription(text.toString());
+                type.add(text.toString());
                 break;
+
             case PORTION:
                 food.setPortion(text.toString());
                 break;
+
             case PICTURE:
                 food.setPicture(text.toString());
                 break;
+
             case FOOD:
                 foodList.add(food);
-                food = null;
                 break;
         }
     }

@@ -2,6 +2,8 @@ package task5.sax.bean;
 
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Food implements Serializable {
 
@@ -9,39 +11,33 @@ public class Food implements Serializable {
     private String id;
     private String picture;
     private String name;
-    private String description;
     private String portion;
-    private String price;
+    private Map<String, Map<String,String >> types = new HashMap<>();
+
 
     public Food(){}
 
+    public Map getTypes(){
+        return types;
+    }
+
+    public void setTypes(String id, String description, String price){
+        Map<String,String > type = new HashMap<>();
+        type.put(description, price);
+        types.put(id, type);
+    }
     public String getId() {
         return id;
     }
     public void setId(String id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
     }
-    public String getPrice() {
-        return price;
-    }
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getPicture() {
         return picture;
     }
@@ -65,9 +61,8 @@ public class Food implements Serializable {
         if (id != null ? !id.equals(food.id) : food.id != null) return false;
         if (picture != null ? !picture.equals(food.picture) : food.picture != null) return false;
         if (name != null ? !name.equals(food.name) : food.name != null) return false;
-        if (description != null ? !description.equals(food.description) : food.description != null) return false;
         if (portion != null ? !portion.equals(food.portion) : food.portion != null) return false;
-        return price != null ? price.equals(food.price) : food.price == null;
+        return types != null ? types.equals(food.types) : food.types == null;
 
     }
 
@@ -76,9 +71,8 @@ public class Food implements Serializable {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (picture != null ? picture.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (portion != null ? portion.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (types != null ? types.hashCode() : 0);
         return result;
     }
 }

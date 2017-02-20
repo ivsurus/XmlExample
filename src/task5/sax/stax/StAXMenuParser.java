@@ -1,9 +1,9 @@
 package task5.sax.stax;
 
-
+import task5.sax.bean.Appetizer;
 import task5.sax.bean.Food;
-import task5.sax.bean.tag.MenuTagName;
-
+import task5.sax.bean.menuName.MenuAttributeName;
+import task5.sax.bean.menuName.MenuTagName;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -11,8 +11,8 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 public class StAXMenuParser {
 
@@ -21,34 +21,61 @@ public class StAXMenuParser {
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 
         try {
-            InputStream input = new FileInputStream("menu2.xml");
+            InputStream input = new FileInputStream("menu.xml");
 
             XMLStreamReader reader = inputFactory.createXMLStreamReader(input);
 
-            List<Food> menu = process(reader);
+            Map<Appetizer,List<Food>> menu = process(reader);
 
-            for (Food food : menu) {
-                System.out.println(food.getName());
-                System.out.println(food.getCalories());
+            Iterator<Map.Entry<Appetizer, List<Food>>> foodIterator = menu.entrySet().iterator();
+
+            while (foodIterator.hasNext()){
+
+                Map.Entry<Appetizer, List<Food>> pair = foodIterator.next();
+
+                System.out.println(pair.getKey().getName());
+
+                for (Food food : pair.getValue()) {
+
+                    System.out.println("FOOD ID: " + food.getId());
+                    System.out.println("FOOD PICTURE: " + food.getPicture());
+                    System.out.println("FOOD NAME: " + food.getName());
+                    System.out.println("FOOD PORTION: " + food.getPortion());
+                    System.out.println("Количество типов " + food.getTypes().size());
+                    Iterator<Map.Entry<String, Map<String,String>>> typesIterator = food.getTypes().entrySet().iterator();
+
+                    while (typesIterator.hasNext()){
+                        Map.Entry<String, Map<String,String>> typesPair = typesIterator.next();
+                        System.out.println("TYPE ID: " + typesPair.getKey());
+                        Iterator<Map.Entry<String,String>> typeIterator = typesPair.getValue().entrySet().iterator();
+                        while(typeIterator.hasNext()){
+                            Map.Entry<String,String> typePair = typeIterator.next();
+                            System.out.println("TYPE DESCRIPTION: " + typePair.getKey());
+                            System.out.println("TYPE PRICE: " + typePair.getValue());
+                        }
+                    }
+                }
+                System.out.println("StaXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             }
+
 
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
     }
 
-    private static List<Food> process(XMLStreamReader reader) throws XMLStreamException {
+    private static Map<Appetizer,List<Food>> process(XMLStreamReader reader) throws XMLStreamException {
 
-        List<Food> menu = new ArrayList<Food>();
+        Map<Appetizer, List<Food>> appetizersMap = new HashMap<>();
+        Appetizer appetizer = null;
+        List<Food> foodList = null;
         Food food = null;
         MenuTagName elementName = null;
+        List <String> type = null;
 
         while (reader.hasNext()) {
 
-            // определение типа "прочтённого" элемента (тега)
-            int type = reader.next();
-
-            switch (type) {
+            switch (reader.next()) {
 
                 case XMLStreamConstants.START_ELEMENT:
 
@@ -57,19 +84,24 @@ public class StAXMenuParser {
                     switch (elementName) {
                         case FOOD:
                             food = new Food();
-                            Integer id = Integer.parseInt(reader.getAttributeValue(null, "id"));
-                            food.setId(id);
+                            food.setId(reader.getAttributeValue(null, MenuAttributeName.ID.toString().toLowerCase()));
                             break;
                         case APPETIZER:
-                            food = new Food();
-                            Integer id = Integer.parseInt(reader.getAttributeValue(null, "id"));
-                            food.setId(id);
+                            appetizer = new Appetizer();
+                            foodList = new ArrayList<>();
+                            appetizer.setName(reader.getAttributeValue(null, MenuAttributeName.NAME.toString().toLowerCase()));
+                            break;
+                        case TYPE:
+                            type = new ArrayList<>();
+                            type.add(reader.getAttributeValue(null, MenuAttributeName.ID.toString().toLowerCase()));
                             break;
                     }
-                    break;
+                break;
 
                 case XMLStreamConstants.CHARACTERS:
+
                     String text = reader.getText().trim();
+
                     if (text.isEmpty()) {
                         break;
                     }
@@ -78,28 +110,40 @@ public class StAXMenuParser {
                             food.setName(text);
                             break;
                         case PRICE:
-                            food.setPrice(text);
+                            type.add(text);
                             break;
                         case DESCRIPTION:
-                            food.setDescription(text);
+                            type.add(text);
                             break;
-                        case CALORIES:
-                            Integer calories = Integer.parseInt(text);
-                            food.setCalories(calories);
+                        case PORTION:
+                            food.setPortion(text);
+                            break;
+                        case PICTURE:
+                            food.setPicture(text);
                             break;
                     }
                     break;
 
                 case XMLStreamConstants.END_ELEMENT:
 
-                    elementName = MenuTagName.getElementTagName(reader.getLocalName());
+                    elementName = MenuTagName.valueOf(reader.getLocalName().toUpperCase());
 
                     switch (elementName) {
                         case FOOD:
-                            menu.add(food);
+                            foodList.add(food);
+                            food = null;
+                            break;
+                        case APPETIZER:
+                            appetizersMap.put(appetizer, foodList);
+                            appetizer = null;
+                            break;
+                        case TYPE:
+                            food.setTypes(type.get(0), type.get(1), type.get(2));
+                            break;
                     }
+                    break;
             }
         }
-        return menu;
+        return appetizersMap;
     }
 }
