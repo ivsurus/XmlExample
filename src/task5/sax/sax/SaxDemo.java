@@ -1,10 +1,13 @@
-package task5.sax;
+package task5.sax.sax;
 
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+import task5.sax.bean.Appetizer;
+import task5.sax.bean.Food;
+
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.Iterator;

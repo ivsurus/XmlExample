@@ -1,4 +1,4 @@
-package task5.sax;
+package task5.sax.bean;
 
 
 import java.io.Serializable;

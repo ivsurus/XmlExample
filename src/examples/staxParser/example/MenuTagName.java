@@ -3,8 +3,11 @@ package examples.staxParser.example;
 
 
 public enum MenuTagName {
+
     NAME, PRICE, DESCRIPTION, CALORIES, FOOD, BREAKFAST_MENU;
+
     public static MenuTagName getElementTagName(String element) {
+
         switch (element) {
             case "food":
                 return FOOD;
@@ -19,8 +22,7 @@ public enum MenuTagName {
             case "name":
                 return NAME;
             default:
-                throw new EnumConstantNotPresentException(MenuTagName.class,
-                        element);
+                throw new EnumConstantNotPresentException(MenuTagName.class, element);
         }
     }
 }

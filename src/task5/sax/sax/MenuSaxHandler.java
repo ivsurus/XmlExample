@@ -1,10 +1,14 @@
-package task5.sax;
+package task5.sax.sax;
 
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
+import task5.sax.bean.Appetizer;
+import task5.sax.bean.Food;
+import task5.sax.bean.tag.MenuTagName;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,18 +16,16 @@ import java.util.Map;
 
 public class MenuSaxHandler extends DefaultHandler {
 
-    private List<Food> foodList;
-
     private Map<Appetizer, List<Food>> appetizersMap = new HashMap<>();
-
+    private List<Food> foodList;
     private Appetizer appetizer;
     private Food food;
 
     private StringBuilder text;
 
-    public List<Food> getFoodList() {
+ /*   public List<Food> getFoodList() {
         return foodList;
-    }
+    }*/
 
     public Map getAppetizersMap() {
         return appetizersMap;
@@ -39,8 +41,7 @@ public class MenuSaxHandler extends DefaultHandler {
 
     public void startElement(String uri, String localName, String qName,
                              Attributes attributes) throws SAXException {
-        System.out.println("startElement -> " + "uri: " + uri + ", localName: " + localName
-                        + ", qName: " + qName);
+        System.out.println("startElement -> " + "uri: " + uri + ", localName: " + localName + ", qName: " + qName);
         text = new StringBuilder();
 
         if (qName.equals("food")){
@@ -57,8 +58,7 @@ public class MenuSaxHandler extends DefaultHandler {
         text.append(buffer, start, length);
     }
 
-    public void endElement(String uri, String localName, String qName)
-            throws SAXException {
+    public void endElement(String uri, String localName, String qName) throws SAXException {
 
         MenuTagName tagName = MenuTagName.valueOf(qName.toUpperCase().replace("-", "_"));
 
