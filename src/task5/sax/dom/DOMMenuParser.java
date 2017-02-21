@@ -18,22 +18,15 @@ public class DOMMenuParser {
 
     public final static String MENU = "menu.xml";
 
-    public static void main(String[] args) throws SAXException, IOException{
-
-
-
-
+    public static Map parseMenu() throws SAXException, IOException{
 
         DOMParser parser = new DOMParser();
         parser.parse(MENU);
         Document document = parser.getDocument();
-
         Map<Appetizer, List<Food>> appetizersMap = new HashMap<>();
         List<Food> foodList;
-
         Element appertizersElement = document.getDocumentElement();
         NodeList appertizerNodes = appertizersElement.getElementsByTagName(MenuTagName.APPETIZER.toString().toLowerCase());
-
 
         Appetizer appetizer;
         for (int i = 0; i < appertizerNodes.getLength(); i++) {
@@ -65,38 +58,7 @@ public class DOMMenuParser {
             }
             appetizersMap.put(appetizer,foodList);
         }
-        //вывод
-        Iterator<Map.Entry<Appetizer, List<Food>>> foodIterator = appetizersMap.entrySet().iterator();
-
-        while (foodIterator.hasNext()){
-
-            Map.Entry<Appetizer, List<Food>> pair = foodIterator.next();
-
-            System.out.println(pair.getKey().getName());
-
-            for (Food food : pair.getValue()) {
-
-                System.out.println("FOOD ID: " + food.getId());
-                System.out.println("FOOD PICTURE: " + food.getPicture());
-                System.out.println("FOOD NAME: " + food.getName());
-                System.out.println("FOOD PORTION: " + food.getPortion());
-                System.out.println("Количество типов " + food.getTypes().size());
-                Iterator<Map.Entry<String, Map<String,String>>> typesIterator = food.getTypes().entrySet().iterator();
-
-                while (typesIterator.hasNext()){
-                    Map.Entry<String, Map<String,String>> typesPair = typesIterator.next();
-                    System.out.println("TYPE ID: " + typesPair.getKey());
-                    Iterator<Map.Entry<String,String>> typeIterator = typesPair.getValue().entrySet().iterator();
-                    while(typeIterator.hasNext()){
-                        Map.Entry<String,String> typePair = typeIterator.next();
-                        System.out.println("TYPE DESCRIPTION: " + typePair.getKey());
-                        System.out.println("TYPE PRICE: " + typePair.getValue());
-                    }
-                }
-            }
-            System.out.println("Dommmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-        }
-
+        return appetizersMap;
     }
 
     private static Element getSingleChild(Element element, String childName){
