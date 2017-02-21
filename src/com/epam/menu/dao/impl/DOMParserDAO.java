@@ -1,28 +1,44 @@
-package task5.sax.dom;
+package com.epam.menu.dao.impl;
 
-
+import com.epam.menu.bean.Appetizer;
+import com.epam.menu.bean.Food;
+import com.epam.menu.bean.Request;
+import com.epam.menu.bean.menuName.MenuAttributeName;
+import com.epam.menu.bean.menuName.MenuTagName;
+import com.epam.menu.dao.ParserDAO;
+import com.epam.menu.dao.exeption.DAOException;
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import task5.sax.bean.Appetizer;
-import task5.sax.bean.Food;
-import task5.sax.bean.menuName.MenuAttributeName;
-import task5.sax.bean.menuName.MenuTagName;
 import java.io.IOException;
 import java.util.*;
 
 
-public class DOMMenuParser {
+public class DOMParserDAO implements ParserDAO{
 
-    public final static String MENU = "menu.xml";
+    private final static String MENU = "menu.xml";
 
-    public static Map parseMenu() throws SAXException, IOException{
-
+    @Override
+    public Map<Appetizer, List<Food>> parseMenu(String request)
+                                                throws DAOException {
         DOMParser parser = new DOMParser();
-        parser.parse(MENU);
-        Document document = parser.getDocument();
+        Map<Appetizer, List<Food>> menu;
+        try {
+            parser.parse(MENU);
+            Document document = parser.getDocument();
+            menu = parseMenu(document);
+        } catch (SAXException | IOException e) {
+            throw new DAOException(e);
+        }
+            return menu;
+    }
+
+
+
+    public Map parseMenu(Document document) throws SAXException, IOException{
+
         Map<Appetizer, List<Food>> appetizersMap = new HashMap<>();
         List<Food> foodList;
         Element appertizersElement = document.getDocumentElement();
@@ -61,9 +77,11 @@ public class DOMMenuParser {
         return appetizersMap;
     }
 
-    private static Element getSingleChild(Element element, String childName){
+    private Element getSingleChild(Element element, String childName){
         NodeList nlist = element.getElementsByTagName(childName);
         Element child = (Element) nlist.item(0);
         return child;
     }
+
+
 }

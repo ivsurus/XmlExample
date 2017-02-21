@@ -1,4 +1,4 @@
-package task5.sax.bean;
+package com.epam.menu.bean;
 
 
 import java.io.Serializable;
@@ -17,37 +17,37 @@ public class Food implements Serializable {
 
     public Food(){}
 
-    public Map getTypes(){
+    public final Map getTypes(){
         return types;
     }
 
-    public void setTypes(String id, String description, String price){
+    public final void setTypes(String id, String description, String price){
         Map<String,String > type = new HashMap<>();
         type.put(description, price);
         types.put(id, type);
     }
-    public String getId() {
+    public final String getId() {
         return id;
     }
-    public void setId(String id) {
+    public final void setId(String id) {
         this.id = id;
     }
-    public String getName() {
+    public final String getName() {
         return name;
     }
-    public void setName(String name) {
+    public final  void setName(String name) {
         this.name = name;
     }
-    public String getPicture() {
+    public  final String getPicture() {
         return picture;
     }
-    public void setPicture(String picture) {
+    public  final void setPicture(String picture) {
         this.picture = picture;
     }
-    public String getPortion() {
+    public  final String getPortion() {
         return portion;
     }
-    public void setPortion(String portion) {
+    public  final void setPortion(String portion) {
         this.portion = portion;
     }
 
@@ -59,9 +59,11 @@ public class Food implements Serializable {
         Food food = (Food) o;
 
         if (id != null ? !id.equals(food.id) : food.id != null) return false;
-        if (picture != null ? !picture.equals(food.picture) : food.picture != null) return false;
+        if (picture != null ? !picture.equals(food.picture) : food.picture != null)
+            return false;
         if (name != null ? !name.equals(food.name) : food.name != null) return false;
-        if (portion != null ? !portion.equals(food.portion) : food.portion != null) return false;
+        if (portion != null ? !portion.equals(food.portion) : food.portion != null)
+            return false;
         return types != null ? types.equals(food.types) : food.types == null;
 
     }

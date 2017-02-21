@@ -1,9 +1,12 @@
-package task5.sax.stax;
+package com.epam.menu.dao.impl;
 
-import task5.sax.bean.Appetizer;
-import task5.sax.bean.Food;
-import task5.sax.bean.menuName.MenuAttributeName;
-import task5.sax.bean.menuName.MenuTagName;
+import com.epam.menu.bean.Food;
+import com.epam.menu.bean.Request;
+import com.epam.menu.bean.menuName.MenuAttributeName;
+import com.epam.menu.bean.menuName.MenuTagName;
+import com.epam.menu.bean.Appetizer;
+import com.epam.menu.dao.ParserDAO;
+import com.epam.menu.dao.exeption.DAOException;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -14,57 +17,26 @@ import java.io.InputStream;
 import java.util.*;
 
 
-public class StAXMenuParser {
+public class StAXParserDAO implements ParserDAO{
 
-    public static void main(String[] args) throws FileNotFoundException {
+    private final static String MENU = "menu.xml";
 
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-
+    @Override
+    public Map<Appetizer, List<Food>> parseMenu(String request) throws DAOException {
+        Map<Appetizer,List<Food>> menu;
         try {
-            InputStream input = new FileInputStream("menu.xml");
-
+            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+            InputStream input = new FileInputStream(MENU);
             XMLStreamReader reader = inputFactory.createXMLStreamReader(input);
-
-            Map<Appetizer,List<Food>> menu = process(reader);
-
-            Iterator<Map.Entry<Appetizer, List<Food>>> foodIterator = menu.entrySet().iterator();
-
-            while (foodIterator.hasNext()){
-
-                Map.Entry<Appetizer, List<Food>> pair = foodIterator.next();
-
-                System.out.println(pair.getKey().getName());
-
-                for (Food food : pair.getValue()) {
-
-                    System.out.println("FOOD ID: " + food.getId());
-                    System.out.println("FOOD PICTURE: " + food.getPicture());
-                    System.out.println("FOOD NAME: " + food.getName());
-                    System.out.println("FOOD PORTION: " + food.getPortion());
-                    System.out.println("Количество типов " + food.getTypes().size());
-                    Iterator<Map.Entry<String, Map<String,String>>> typesIterator = food.getTypes().entrySet().iterator();
-
-                    while (typesIterator.hasNext()){
-                        Map.Entry<String, Map<String,String>> typesPair = typesIterator.next();
-                        System.out.println("TYPE ID: " + typesPair.getKey());
-                        Iterator<Map.Entry<String,String>> typeIterator = typesPair.getValue().entrySet().iterator();
-                        while(typeIterator.hasNext()){
-                            Map.Entry<String,String> typePair = typeIterator.next();
-                            System.out.println("TYPE DESCRIPTION: " + typePair.getKey());
-                            System.out.println("TYPE PRICE: " + typePair.getValue());
-                        }
-                    }
-                }
-                System.out.println("StaXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            }
-
-
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
+            menu = process(reader);
+        } catch (XMLStreamException | FileNotFoundException e){
+            throw new DAOException(e);
         }
+        return menu;
     }
 
-    private static Map<Appetizer,List<Food>> process(XMLStreamReader reader) throws XMLStreamException {
+
+    private Map<Appetizer,List<Food>> process(XMLStreamReader reader) throws XMLStreamException {
 
         Map<Appetizer, List<Food>> appetizersMap = new HashMap<>();
         Appetizer appetizer = null;
@@ -146,4 +118,6 @@ public class StAXMenuParser {
         }
         return appetizersMap;
     }
+
+
 }

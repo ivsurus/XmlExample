@@ -1,19 +1,23 @@
-package task5.sax.sax;
+package com.epam.menu.dao.impl;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import com.epam.menu.bean.Request;
+import com.epam.menu.dao.ParserDAO;
+import com.epam.menu.dao.exeption.DAOException;
+import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
-import task5.sax.bean.Appetizer;
-import task5.sax.bean.Food;
-import task5.sax.bean.menuName.MenuAttributeName;
-import task5.sax.bean.menuName.MenuTagName;
+import com.epam.menu.bean.Appetizer;
+import com.epam.menu.bean.Food;
+import com.epam.menu.bean.menuName.MenuAttributeName;
+import com.epam.menu.bean.menuName.MenuTagName;
+import org.xml.sax.helpers.XMLReaderFactory;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MenuSaxHandler extends DefaultHandler {
+
+public class SAXParserDAO extends DefaultHandler implements ParserDAO{
 
     private Map<Appetizer, List<Food>> appetizersMap = new HashMap<>();
     private List<Food> foodList;
@@ -21,6 +25,31 @@ public class MenuSaxHandler extends DefaultHandler {
     private Food food;
     private List <String> type;
     private StringBuilder text;
+
+    private final static String MENU = "menu.xml";
+
+    @Override
+    public Map<Appetizer, List<Food>> parseMenu(String request) throws DAOException {
+        Map<Appetizer, List<Food>> menu;
+        try {
+            XMLReader reader = XMLReaderFactory.createXMLReader();
+            SAXParserDAO handler = new SAXParserDAO();
+            reader.setContentHandler(handler);
+            reader.parse(new InputSource("menu.xml"));
+            // включение проверки действительности
+            reader.setFeature("http://xml.org/sax/features/validation", true);
+            // включение обработки пространств имен
+            reader.setFeature("http://xml.org/sax/features/namespaces", true);
+            // включение канонизации строк
+            reader.setFeature("http://xml.org/sax/features/string-interning", true);
+            // отключение обработки схем
+            reader.setFeature("http://apache.org/xml/features/validation/schema", false);
+            menu = handler.getAppetizersMap();
+        } catch (SAXException | IOException e){
+            throw new DAOException();
+        }
+        return menu;
+    }
 
 
     public Map getAppetizersMap() {
@@ -112,5 +141,7 @@ public class MenuSaxHandler extends DefaultHandler {
                 + exception.getMessage());
         throw (exception);
     }
+
+
 }
 

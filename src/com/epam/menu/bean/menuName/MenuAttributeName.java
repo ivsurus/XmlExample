@@ -1,4 +1,4 @@
-package task5.sax.bean.menuName;
+package com.epam.menu.bean.menuName;
 
 
 public enum MenuAttributeName {

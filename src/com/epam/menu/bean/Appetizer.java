@@ -1,4 +1,4 @@
-package task5.sax.bean;
+package com.epam.menu.bean;
 
 
 import java.io.Serializable;
@@ -9,10 +9,10 @@ public class Appetizer implements Serializable {
 
     public Appetizer(){}
 
-    public void setName(String name){
+    public final void setName(String name){
         this.name = name;
     }
-    public String getName(){
+    public final String getName(){
         return name;
     }
 
